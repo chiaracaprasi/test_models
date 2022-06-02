@@ -8,6 +8,8 @@ Focus is on:
 """
 
 import unittest
+import inspect
+import pycodestyle
 
 from models import rectangle
 Rectangle = rectangle.Rectangle
@@ -16,6 +18,25 @@ Rectangle = rectangle.Rectangle
 class TestRectangleDocs(unittest.TestCase):
     """Tests for documentation of class"""
 
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        cls.rect_funcs = inspect.getmembers(Rectangle, inspect.isfunction)
+
+    def test_conformance_class(self):
+        """Test that we conform to Pycodestyle."""
+        style = pycodestyle.StyleGuide(quiet=True)
+        result = style.check_files(['models/rectangle.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_conformance_test(self):
+        """Test that we conform to Pycodestyle."""
+        style = pycodestyle.StyleGuide(quiet=True)
+        result = style.check_files(['tests/test_rectangle.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
     def test_module_docstr(self):
         """Tests for docstring"""
         self.assertTrue(len(rectangle.__doc__) >= 1)
@@ -23,6 +44,12 @@ class TestRectangleDocs(unittest.TestCase):
     def test_class_docstr(self):
         """Tests for docstring"""
         self.assertTrue(len(Rectangle.__doc__) >= 1)
+
+    def test_func_docstr(self):
+        """Tests for docstrings in all functions"""
+        for func in self.rect_funcs:
+            self.assertTrue(len(func[1].__doc__) >= 1)
+
 
 class TestRectangle(unittest.TestCase):
     """ Tests functionality of class"""
