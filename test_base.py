@@ -49,6 +49,11 @@ class TestBaseDocs(unittest.TestCase):
 
 class TestBase(unittest.TestCase):
     """ Tests functionality of class"""
+
+    def setUp(self):
+        """Reset nb_object to 0 for every test"""
+        Base._Base__nb_objects = 0
+
     def test_id_none(self):
         """ Tests id as none"""
         b_1 = Base()
@@ -63,3 +68,27 @@ class TestBase(unittest.TestCase):
         """ Tests entering too many args to instantiate class"""
         with self.assertRaises(TypeError):
             b = Base(1, 2)
+
+    def test_increment_if_none_id(self):
+        """Test increment if id is None """
+        b_0 = Base()
+        self.assertEqual(b_0.id, 1)
+        b_1 = Base()
+        self.assertEqual(b_1.id, 2)
+        b_2 = Base()
+        self.assertEqual(b_2.id, 3)
+
+    def test_increment_id_with_value_none_comb(self):
+        """Test increment if id is none or with value"""
+        b_0 = Base()
+        self.assertEqual(b_0.id, 1)
+        b_1 = Base(-1)
+        self.assertEqual(b_1.id, -1)
+        b_2 = Base(-10)
+        self.assertEqual(b_2.id, -10)
+        b_3 = Base()
+        self.assertEqual(b_3.id, 2)
+        b_4 = Base()
+        self.assertEqual(b_4.id, 3)
+        b_5 = Base(10)
+        self.assertEqual(b_5.id, 10)
