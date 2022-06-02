@@ -46,6 +46,7 @@ class TestBaseDocs(unittest.TestCase):
         for func in self.base_funcs:
             self.assertTrue(len(func[1].__doc__) >= 1)
 
+
 class TestBase(unittest.TestCase):
     """ Tests functionality of class"""
     def test_id_none(self):
