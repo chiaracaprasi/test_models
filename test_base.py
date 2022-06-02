@@ -29,7 +29,7 @@ class TestBaseDocs(unittest.TestCase):
     def test_conformance_test(self):
         """Test that we conform to Pycodestyle."""
         style = pycodestyle.StyleGuide(quiet=True)
-        result = style.check_files(['tests/base.py'])
+        result = style.check_files(['tests/test_base.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -63,5 +63,3 @@ class TestBase(unittest.TestCase):
         """ Tests entering too many args to instantiate class"""
         with self.assertRaises(TypeError):
             b = Base(1, 2)
-
-    
