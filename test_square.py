@@ -34,7 +34,6 @@ class TestSquaredocs(unittest.TestCase):
     def test_func_docstr(self):
         """Tests for docstrings in all functions"""
         for func in self.square_funcs:
-            # line below needs to be checked as throwing error
             self.assertTrue(len(func[1].__doc__) >= 1)
 
 
@@ -136,8 +135,6 @@ class TestRectangle(unittest.TestCase):
         """ Test passing a string (wrong type) for update method """
         s = Square(1)
         with self.assertRaises(TypeError):
-            s.update(id="test")
-        with self.assertRaises(TypeError):
             s.update(size="test")
         with self.assertRaises(TypeError):
             s.update(x="test")
@@ -155,3 +152,15 @@ class TestRectangle(unittest.TestCase):
         s = Square(1, 2, 2, 1)
         s.update(3, 3, 3, 3, id=4, size=4, x=4, y=4)
         self.assertEqual(str(s), "[Square] (3) 3/3 - 3")
+
+    def test_string(self):
+        """ Test for the string representation"""
+        s = Square(1, 2, 2, 1)
+        self.assertEqual(str(s), "[Square] (1) 2/2 - 1")
+
+    def test_area(self):
+        """ test area methof for square """
+        s_1 = Square(size=2)
+        self.assertEqual(self.s_1.area(), 4)
+        s_2 = Square(size=6)
+        self.assertEqual(self.s_2.area(), 36)
